@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn Mustache.wsgi
+web: gunicorn Mustache.wsgi --log-file -
