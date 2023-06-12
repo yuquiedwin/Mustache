@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default=config('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -78,7 +78,6 @@ WSGI_APPLICATION = 'Mustache.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-#mysql -hcontainers-us-west-63.railway.app -uroot -poECHHiteOAUjP4FkNXVR --port 5982 --protocol=TCP railway
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
