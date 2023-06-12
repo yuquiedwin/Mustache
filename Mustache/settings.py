@@ -78,12 +78,17 @@ WSGI_APPLICATION = 'Mustache.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#mysql -hcontainers-us-west-63.railway.app -uroot -poECHHiteOAUjP4FkNXVR --port 5982 --protocol=TCP railway
 DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': '-poECHHiteOAUjP4FkNXVR',
+        'HOST': 'containers-us-west-63.railway.app',
+        'PORT': '5982',
     }
+}
 
 
 
