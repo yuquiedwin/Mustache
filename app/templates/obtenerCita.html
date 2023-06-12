@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{% static 'css/style_crearCita.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo.ico' %}" type="image/x-icon" />
+    <!-- Add meta tags for SEO -->
+    <meta name="description"
+        content="Mustache Barber es una barbería que ofrece servicios de corte de cabello, afeitado de barba y tinte en cabello. Agende una cita hoy mismo." />
+    <meta name="keywords"
+        content="Palabras: Barbero, Cita en barbería, Mustache,Mostacho,Cortes, Barba" />
+    <meta name="author" content="Edwin Jair Yuqui Armenta & Jesus Alejandro Perez Fuentes" />
+
+    <!-- Open Graph meta tags for social media sharing -->
+    <meta property="og:title" content="Mustache Barber - Obtener cita" />
+    <meta property="og:description"
+        content="Mustache Barber es una barbería que ofrece servicios de corte de cabello, afeitado de barba y tinte en cabello. Agende una cita hoy mismo." />
+    <meta property="og:image" content="{% static 'images/logo.jpg' %}" />
+    <meta property="og:url" content="https://mustache.onrender.com/citas/obtenerCita" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mustache Barber" />
+
+    <!-- Twitter Card meta tags for social media sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mustache Barber - Obtener cita" />
+    <meta name="twitter:description"
+        content="Mustache Barber es una barbería que ofrece servicios de corte de cabello, afeitado de barba y tinte en cabello. Agende una cita hoy mismo." />
+    <meta name="twitter:image" content="{% static 'images/logo.jpg' %}" />
+
+    <title>Crear cita</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">Mustache</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav__items"><a href="{% url 'index' %}" class="nav__links">Inicio </a></li>
+                    <li class="nav__items"><a href="{% url 'contact' %}" class="nav__links">Contacto </a></li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav__items"><a href="{% url 'obtenerCita' %}" class="nav__links">Agendar cita </a></li>
+                    {% endif %}
+                    {% if request.user.is_staff %}
+                    <li class="nav__items">
+                        <a href="{% url 'adminCitas' %}" class="nav__links">Dashboard </a>
+                    </li>
+                    {% endif %}
+                    <li class="nav__items"><a href="{% url 'store' %}" class="nav__links">Tienda </a></li>
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav__items"><a href="{% url 'login' %}" class="nav__links">Iniciar Sesión </a></li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                    <li class="nav__items">
+                        <a href="{% url 'logout' %}" class="nav__links">Cerrar Sesión {{user.first_name}}
+                            {{user.last_name}}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="banner3">
+        <div class="py-5 banner"
+            style="background-image:url(https://rare-gallery.com/uploads/posts/5396989-man-male-scissors-bead-barber-dark-shop-store-barber-shop-trim-modern-barber-beard-trip-fashion-style-scissor-barbershop-work-old-man-vintage-hair-stylist-free-stock-photos.jpg);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 col-lg-5">
+                        <h3 class="my-3 text-white font-weight-medium text-uppercase">Agendar cita</h3>
+                        <div class="bg-white">
+                            <form action="{% url 'crearCita' %}" method="post">
+                                {% csrf_token %}
+
+                                <div class="form-row border-bottom d-flex">
+                                    <div class="p-4 justify-content-end left border-right w-50">
+                                        <label class="text-inverse font-12 text-uppercase">Nombre:</label>
+                                        <input type="text" class="border-0 p-0 font-14 form-control" name="nombre"
+                                            placeholder="Nombre" required/>
+                                    </div>
+                                    <div class="p-4 justify-content-start right w-50">
+                                        <label class="text-inverse font-12 text-uppercase">Apellido:</label>
+                                        <input type="text" class="border-0 p-0 font-14 form-control" name="apellido"
+                                            placeholder="Apellido" required/>
+                                    </div>
+                                </div>
+                                <div class="form-row border-bottom p-4">
+                                    <label class="text-inverse font-12 text-uppercase">Correo electrónico:</label>
+                                    <input type="email" class="border-0 p-0 font-14 form-control" name="correo"
+                                        placeholder="Ingrese su correo electrónico" required/>
+                                </div>
+                                <div class="form-row border-bottom p-4">
+                                    <label class="text-inverse font-12 text-uppercase">Número de celular:</label>
+                                    <input type="text" class="border-0 p-0 font-14 form-control" name="numero_telefono"
+                                        placeholder="Ingrese su número de celular: " required />
+                                </div>
+                                <div class="form-row border-bottom p-4 position-relative">
+                                    <label class="text-inverse font-12 text-uppercase">Fecha y hora: </label>
+                                    <div class="input-group date">
+                                        <input type="datetime-local" name="fecha_hora" id="fechaHora" min="" max=""
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row border-bottom p-4 position-relative">
+                                    {% for barbero in barberos %}
+                                    <label>
+                                        <input type="radio" name="barbero_id" value="{{barbero.id}}" required>
+                                        <div class="barbero-info">
+                                            <img src="{{ barbero.image.url }}" alt="{{ barbero.first_name }}"
+                                                class="barbero-image">
+                                            <span class="barbero-name">{{barbero.first_name}}
+                                                {{barbero.last_name}}</span>
+                                        </div>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+
+                                <div>
+                                    <button
+                                        class=" w-100 m-0 border-0 py-4 font-14 font-weight-medium btn btn-danger-gradiant btn-block position-relative rounded-0 text-center text-white text-uppercase"
+                                        type="submit">
+                                        <span>Agendar cita</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <footer class="footer">
+        <section class="footer__container container">
+            <nav class="nav nav--footer">
+                <h2 class="footer__title">Mustache Barber</h2>
+
+                <ul class="nav__link nav__link--footer">
+                    <li class="nav__items">
+                        <a href="{% url 'index' %}" class="nav__links">Inicio</a>
+                    </li>
+                    <li class="nav__items">
+                        <a href="{% url 'contact' %}" class="nav__links">Contacto</a>
+                    </li>
+                    <li class="nav__items">
+                        <a href="{% url 'store' %}" class="nav__links">Tienda</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <section class="footer__copy container">
+            <h3 class="footer__copyright">
+                Derechos reservados &copy; Mustache Barber 2023
+            </h3>
+        </section>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        // Obtén el elemento del campo datetime-local
+        var campoFechaHora = document.getElementById('fechaHora');
+
+        // Define la fecha mínima y máxima permitida
+        var fechaMinima = new Date(); // Fecha actual
+        var fechaMaxima = new Date();
+        fechaMaxima.setMonth(fechaMaxima.getMonth() + 1); // Agrega un mes a la fecha actual
+
+        // Formatea las fechas mínima y máxima en el formato necesario para el campo datetime-local
+        var formatoFecha = 'YYYY-MM-DD'; // Formato de fecha
+        var formatoHora = 'hh:mm'; // Formato de hora
+        var fechaMinimaFormateada = fechaMinima.toISOString().slice(0, 10) + 'T' + fechaMinima.toISOString().slice(11, 16);
+        var fechaMaximaFormateada = fechaMaxima.toISOString().slice(0, 10) + 'T' + fechaMaxima.toISOString().slice(11, 16);
+
+        // Establece los atributos min y max en el campo datetime-local
+        campoFechaHora.setAttribute('min', fechaMinimaFormateada);
+        campoFechaHora.setAttribute('max', fechaMaximaFormateada);
+
+        // Define la hora mínima y máxima permitida
+        var horaMinima = 9; // 9AM
+        var horaMaxima = 20; // 8PM
+
+        // Verifica la hora seleccionada cuando se cambia el valor del campo datetime-local
+        campoFechaHora.addEventListener('change', function () {
+            var fechaHoraSeleccionada = new Date(campoFechaHora.value);
+
+            var horaSeleccionada = fechaHoraSeleccionada.getHours();
+            if (horaSeleccionada < horaMinima || horaSeleccionada > horaMaxima) {
+                alert('La hora seleccionada debe estar entre las 9 AM y las 8 PM.');
+                campoFechaHora.value = ''; // Borra el valor del campo
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

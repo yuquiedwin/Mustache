@@ -1,12 +1,453 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mustache Barber</title>
+    <link rel="shortcut icon" href="{% static 'images/logo.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style_index.css' %}" />
+
+    <!-- Add meta tags for SEO -->
+    <meta name="description"
+        content="Mustache Barber es una barbería que ofrece servicios de corte de cabello, afeitado de barba y tinte en cabello. Agende una cita hoy mismo." />
+    <meta name="keywords"
+        content="barbería, corte de cabello, afeitado de barba, tinte en cabello, barbería en línea" />
+    <meta name="author" content="Edwin Jair Yuqui Armenta & Jesus Alejandro Perez Fuentes" />
+
+    <!-- Open Graph meta tags for social media sharing -->
+    <meta property="og:title" content="Mustache Barber - Inicio" />
+    <meta property="og:description"
+        content="Mustache Barber es una barbería que ofrece servicios de corte de cabello, afeitado de barba y tinte en cabello. Agende una cita hoy mismo." />
+    <meta property="og:image" content="{% static 'images/logo.jpg' %}" />
+    <meta property="og:url" content="https://mustache.onrender.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mustache Barber" />
+
+    <!-- Twitter Card meta tags for social media sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mustache Barber - Inicio" />
+    <meta name="twitter:description"
+        content="Mustache Barber es una barbería que ofrece servicios de corte de cabello, afeitado de barba y tinte en cabello. Agende una cita hoy mismo." />
+    <meta name="twitter:image" content="{% static 'images/logo.jpg' %}" />
+
 </head>
+
 <body>
-    
+    <style>
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(180deg, #0000008c 0%, #0000008c 100%),
+            url('{% static "images/barbershop3_bg.jpg" %}');
+            background-size: cover;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 95%, 0 80%);
+            z-index: -1;
+        }
+    </style>
+    <header class="hero">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <h2 class="nav__title">Mustache</h2>
+            </div>
+
+            <ul class="nav__link nav__link--menu">
+                <li class="nav__items">
+                    <a href="{% url 'index' %}" class="nav__links">Inicio</a>
+                </li>
+                <li class="nav__items">
+                    <a href="{% url 'contact' %}" class="nav__links">Contacto</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav__items">
+                    <a href="{% url 'obtenerCita' %}" class="nav__links">Agendar cita</a>
+                </li>
+                {% endif %}
+                <li class="nav__items">
+                    <a href="#servicios" class="nav__links" onclick="cerrarMenu()">Servicios</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li class="nav__items">
+                    <a href="{% url 'adminCitas' %}" class="nav__links">Dashboard</a>
+                </li>
+                {% endif %}
+                <li class="nav__items">
+                    <a href="{% url 'store' %}" class="nav__links">Tienda</a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav__items">
+                    <a href="{% url 'login' %}" class="nav__links">Iniciar Sesión</a>
+                </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li class="nav__items">
+                    <a href="{% url 'logout' %}" class="nav__links">Cerrar Sesión {{user.first_name}}
+                        {{user.last_name}}</a>
+                </li>
+                {% endif %}
+                <img src="{% static 'images/close.svg' %}" class="nav__close" />
+            </ul>
+
+            <div class="nav__menu">
+                <img src="{% static 'images/menu.svg' %}" class="nav__img" />
+            </div>
+        </nav>
+
+        <section class="hero__container container">
+            <h1 class="hero__title">Mustache</h1>
+            <p class="hero__paragraph">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
+                deleniti, ex quisquam quaerat culpa incidunt enim itaque obcaecati
+                repellendus molestiae voluptatem voluptatum alias pariatur placeat non
+                inventore, repudiandae voluptates tempora.
+            </p>
+            <a href="{% url 'obtenerCita' %}" class="cta">Agendar cita</a>
+        </section>
+    </header>
+
+    <main>
+        <section class="container about" id="servicios">
+            <h2 class="subtitle">Servicios</h2>
+            <p class="about__paragraph">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia,
+                maxime eaque magnam sapiente tempore sunt ducimus maiores sint
+                necessitatibus neque voluptatibus deleniti ipsa unde aliquid quos
+                ipsam nemo doloribus explicabo?
+            </p>
+
+            <div class="about__main">
+                <article class="about__icons">
+                    <img src="{% static 'images/corte-de-cabello.png' %}" class="about__icon" />
+                    <h3 class="about__title">Corte de cabello</h3>
+                    <p class="about__paragraph">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae
+                        tempore porro eius facilis?
+                    </p>
+                </article>
+
+                <article class="about__icons">
+                    <img src="{% static 'images/afeitado-de-barba.png' %}" class="about__icon" />
+                    <h3 class="about__title">Afeitado de barba</h3>
+                    <p class="about__paragraph">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae
+                        tempore porro eius facilis?
+                    </p>
+                </article>
+
+                <article class="about__icons">
+                    <img src="{% static 'images/tinte-en-cabello.png' %}" class="about__icon" />
+                    <h3 class="about__title">Tinte en cabello</h3>
+                    <p class="about__paragraph">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae
+                        tempore porro eius facilis?
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="knowledge">
+            <div class="knowledge__container container">
+                <div class="knowledege__texts">
+                    <h2 class="subtitle">¿Qué es Mustache Barber?</h2>
+                    <p class="knowledge__paragraph">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                        Excepturi, aliquam nemo in facere suscipit at delectus unde labore
+                        ad officia iste accusantium eaque aperiam laborum est voluptate
+                        totam? Modi, obcaecati?
+                    </p>
+                    <a href="{% url 'obtenerCita' %}" class="cta">Agendar cita</a>
+                </div>
+
+                <figure class="knowledge__picture">
+                    <img src="{% static 'images/logo.jpg' %}" class="knowledge__img" alt="sysbook_software" />
+                </figure>
+            </div>
+        </section>
+        <!--
+        <section class="price container">
+            <h2 class="subtitle">Obten el plan perfecto para aprender</h2>
+
+            <div class="price__table">
+                <div class="price__element">
+                    <p class="price__name">Flexbox</p>
+                    <h3 class="price__price">Free</h3>
+
+                    <div class="price__items">
+                        <p class="price__features">Flexbox</p>
+                        <p class="price__features">Layouts</p>
+                        <p class="price__features">Responsive</p>
+                    </div>
+
+                    <a href="#" class="price__cta">Empieza ahora</a>
+                </div>
+
+
+                <div class="price__element price__element--best">
+                    <p class="price__name">Grid</p>
+                    <h3 class="price__price">$30/mes</h3>
+
+                    <div class="price__items">
+                        <p class="price__features">Grid</p>
+                        <p class="price__features">Implicit Grid</p>
+                        <p class="price__features">Responsive</p>
+                    </div>
+
+                    <a href="#" class="price__cta">Empieza ahora</a>
+                </div>
+
+
+                <div class="price__element">
+                    <p class="price__name">Animaciones</p>
+                    <h3 class="price__price">$40/mes</h3>
+
+                    <div class="price__items">
+                        <p class="price__features">Animation</p>
+                        <p class="price__features">Transition</p>
+                        <p class="price__features">Render Website</p>
+                    </div>
+
+                    <a href="#" class="price__cta">Empieza ahora</a>
+                </div>
+            
+
+            </div>
+        </section>
+      -->
+
+
+        <section class="questions container">
+            <h2 class="subtitle">Preguntas frecuentes</h2>
+            <p class="questions__paragraph">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, porro
+                doloribus neque perspiciatis sapiente fuga.
+            </p>
+
+            <section class="questions__container">
+                <article class="questions__padding">
+                    <div class="questions__answer">
+                        <h3 class="questions__title">
+                            Pregunta 1
+                            <span class="questions__arrow">
+                                <img src="{% static 'images/arrow.svg' %}" class="questions__img" />
+                            </span>
+                        </h3>
+
+                        <p class="questions__show">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+                            facere, quidem eum id excepturi assumenda explicabo nam
+                            accusamus veritatis voluptates eveniet adipisci, dicta nihil
+                            nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
+                            amet consectetur adipisicing elit. Quos facere, quidem eum id
+                            excepturi assumenda explicabo nam accusamus veritatis voluptates
+                            eveniet adipisci, dicta nihil nemo modi possimus officiis quam
+                            atque?
+                        </p>
+                    </div>
+                </article>
+
+                <article class="questions__padding">
+                    <div class="questions__answer">
+                        <h3 class="questions__title">
+                            Pregunta 2
+                            <span class="questions__arrow">
+                                <img src="{% static 'images/arrow.svg' %}" class="questions__img" />
+                            </span>
+                        </h3>
+
+                        <p class="questions__show">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+                            facere, quidem eum id excepturi assumenda explicabo nam
+                            accusamus veritatis voluptates eveniet adipisci, dicta nihil
+                            nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
+                            amet consectetur adipisicing elit. Quos facere, quidem eum id
+                            excepturi assumenda explicabo nam accusamus veritatis voluptates
+                            eveniet adipisci, dicta nihil nemo modi possimus officiis quam
+                            atque?
+                        </p>
+                    </div>
+                </article>
+
+                <article class="questions__padding">
+                    <div class="questions__answer">
+                        <h3 class="questions__title">
+                            Pregunta 3
+                            <span class="questions__arrow">
+                                <img src="{% static 'images/arrow.svg' %}" class="questions__img" />
+                            </span>
+                        </h3>
+
+                        <p class="questions__show">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
+                            facere, quidem eum id excepturi assumenda explicabo nam
+                            accusamus veritatis voluptates eveniet adipisci, dicta nihil
+                            nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
+                            amet consectetur adipisicing elit. Quos facere, quidem eum id
+                            excepturi assumenda explicabo nam accusamus veritatis voluptates
+                            eveniet adipisci, dicta nihil nemo modi possimus officiis quam
+                            atque?
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="testimony">
+                <div class="testimony__container container">
+                    <img src="{% static 'images/leftarrow.svg'%}" class="testimony__arrow" id="before" />
+
+                    <section class="testimony__body testimony__body--show" data-id="1">
+                        <div class="testimony__texts">
+                            <h2 class="subtitle">
+                                Mi nombre es Jordan Sarmiento,
+                                <span class="testimony__course">barbero en Mustache Barber.</span>
+                            </h2>
+                            <p class="testimony__review">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
+                                esse, asperiores eaque totam nulla repudiandae quasi, deserunt
+                                culpa exercitationem blanditiis laborum veniam laboriosam saepe
+                                reiciendis dolorem. Cum, ratione voluptatum!
+                            </p>
+                        </div>
+
+                        <figure class="testimony__picture">
+                            <img src="{% static 'images/barbero1.png' %}" class="testimony__img" />
+                        </figure>
+                    </section>
+
+                    <section class="testimony__body" data-id="2">
+                        <div class="testimony__texts">
+                            <h2 class="subtitle">
+                                Mi nombre es Axel Alcazar ,
+                                <span class="testimony__course">barbero en Mustache Barber.</span>
+                            </h2>
+                            <p class="testimony__review">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
+                                esse, asperiores eaque laborum veniam laboriosam saepe
+                                reiciendis dolorem. Cum, ratione voluptatum!
+                            </p>
+                        </div>
+
+                        <figure class="testimony__picture">
+                            <img src="{% static 'images/barbero2.png' %}" class="testimony__img" />
+                        </figure>
+                    </section>
+
+                    <section class="testimony__body" data-id="3">
+                        <div class="testimony__texts">
+                            <h2 class="subtitle">
+                                Mi nombre es Fernando Arteaga,
+                                <span class="testimony__course">barbero en Mustache Barber.</span>
+                            </h2>
+                            <p class="testimony__review">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
+                                esse, niam laboriosam saepe reiciendis dolorem. Cum, ratione
+                                voluptatum!
+                            </p>
+                        </div>
+
+                        <figure class="testimony__picture">
+                            <img src="{% static 'images/barbero3.png' %}" class="testimony__img" />
+                        </figure>
+                    </section>
+
+                    <section class="testimony__body" data-id="4">
+                        <div class="testimony__texts">
+                            <h2 class="subtitle">
+                                Mi nombre es Kevin Ramirez,
+                                <span class="testimony__course">barbero en Mustache Barber.</span>
+                            </h2>
+                            <p class="testimony__review">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut est
+                                esse, niam laboriosam saepe reiciendis dolorem. Cum, ratione
+                                voluptatum!
+                            </p>
+                        </div>
+
+                        <figure class="testimony__picture">
+                            <img src="{% static 'images/barbero4.png' %}" class="testimony__img" />
+                        </figure>
+                    </section>
+
+                    <img src="{% static 'images/rightarrow.svg' %}" class="testimony__arrow" id="next" />
+                </div>
+            </section>
+            <br>
+            <br>
+            <section class="questions__offer">
+                <h2 class="subtitle">¿Estás listo para agendar tu cita?</h2>
+                <p class="questions__copy">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet
+                    ratione architecto magnam, officiis ex porro vero est voluptates
+                    quaerat quibusdam illo veniam reprehenderit eius atque tempora iure
+                    ab non autem.
+                </p>
+                <a href="{% url 'obtenerCita' %}" class="cta">Agenda ya!</a>
+            </section>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <section class="footer__container container">
+            <nav class="nav nav--footer">
+                <h2 class="footer__title">Mustache Barber</h2>
+
+                <ul class="nav__link nav__link--footer">
+                    <li class="nav__items">
+                        <a href="#" class="nav__links">Inicio</a>
+                    </li>
+                    <li class="nav__items">
+                        <a href="{% url 'contact' %}" class="nav__links">Contacto</a>
+                    </li>
+                    <li class="nav__items">
+                        <a href="#servicios" class="nav__links" onclick="cerrarMenu()">Servicios</a>
+                    </li>
+                    <li class="nav__items">
+                        <a href="{% url 'obtenerCita' %}" class="nav__links">Agendar cita</a>
+                    </li>
+                    <li class="nav__items">
+                        <a href="{% url 'store' %}" class="nav__links">Tienda</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <section class="footer__copy container">
+            <h3 class="footer__copyright">
+                Derechos reservados &copy; Mustache Barber 2023
+            </h3>
+        </section>
+    </footer>
+
+    <script>
+        (function cerrarMenu() {
+            const openButton = document.querySelector('.nav__menu');
+            const menu = document.querySelector('.nav__link');
+            const closeMenu = document.querySelector('.nav__close');
+            const menuItems = document.querySelectorAll('.nav__link .nav__items a');
+
+            openButton.addEventListener('click', () => {
+                menu.classList.add('nav__link--show');
+            });
+
+            closeMenu.addEventListener('click', () => {
+                menu.classList.remove('nav__link--show');
+            });
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    menu.classList.remove('nav__link--show');
+                });
+            });
+        })();
+    </script>
+    <script src="{% static 'js/slider.js' %}"></script>
+    <script src="{% static 'js/questions.js' %}"></script>
+    <script src="{% static 'js/menu.js' %}"></script>
 </body>
 </html>
