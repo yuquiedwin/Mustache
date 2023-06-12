@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'Mustache.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/mysite',conn_max_age=600)
+    'default': dj_database_url.config(default='postgres://kouen:DTqqWbdXu3S0m3XFNiq1WigIqbrFURiG@dpg-ci369eak728i8td8p8ug-a.oregon-postgres.render.com/mustache_dg5e',conn_max_age=600)
     }
 
 
@@ -124,9 +124,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_URL = '/images/'
+MEDIA_URL = 'static/images/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/images')
 
 # Following settings only make sense on production and may break development environments.
 if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
