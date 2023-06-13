@@ -58,8 +58,6 @@ def iniciarSesion(request):
                 login(request, user)
                 return redirect('index')
         else:
-            # Mostrar un mensaje de error
-            messages.success(request, "El nombre de usuario o la contraseña son incorrectos.")
             return redirect('login')
     else:
         return render(request, 'login.html')
