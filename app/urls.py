@@ -14,9 +14,9 @@ urlpatterns = [
     path('staff/administrar-ventas', views.adminVentas, name='adminVentas'),
     path('staff/administrar-productos', views.adminProductos, name='adminProductos'),
     path('store/', views.store, name='store'),
-    path('checkout/', views.checkout, name='checkout'),
-    path('checkout/process_order/', views.processOrder, name="process_order"),
-    path('cart/', views.cart, name='cart'),
-    path('cart/update_item/', views.updateItem, name='update_item'),
+    path('store/checkout/', views.checkout, name='checkout'),
+    path('store/checkout/process_order/', views.processOrder, name="process_order"),
+    path('store/cart/', views.cart, name='cart'),
+    path('store/cart/update_item/', views.updateItem, name='update_item'),
     path('store/update_item/', views.updateItem, name="update_item"),
 ]
